@@ -1,0 +1,44 @@
+{
+  "name": "animanga-wrapped-backend",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node ./dist/index.js",
+    "dev": "node ./src/index.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanor9/animanga-wrapped-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juanor9/animanga-wrapped-backend/issues"
+  },
+  "homepage": "https://github.com/juanor9/animanga-wrapped-backend#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.8.4",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.4"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.15",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/morgan": "^1.9.4",
+    "@types/multer": "^1.4.7"
+  }
+}
