@@ -1,6 +1,6 @@
 {
   "name": "animanga-wrapped-backend",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "main": "index.mjs",
   "scripts": {
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/juanor9/animanga-wrapped-backend#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.41.0",
     "cors": "^2.8.5",
     "depcheck": "^1.4.7",
     "dotenv": "^16.0.3",
@@ -30,6 +31,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.4",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.1"
   }
 }
