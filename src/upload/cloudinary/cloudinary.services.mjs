@@ -4,7 +4,6 @@ dotenv.config();
 
 const cloudName = process.env.CLOUDINARY_NAME
 const apiKey = process.env.CLOUDINARY_API_KEY
-console.log("🚀 ~ file: cloudinary.services.mjs:5 ~ apiKey:", apiKey)
 const apiSecret = process.env.CLOUDINARY_API_SECRET
 
 cloudinary.config({ 
@@ -14,10 +13,13 @@ cloudinary.config({
   secure: true
 });
 
-export async function uploadImage(image) {
+export async function uploadImage(data) {
+  const {path, imageName, username} = data;
+  const imageNameWithoutExtension = imageName.split('.').slice(0, -1).join('.');
   try {
-    const result = await cloudinary.uploader.upload(image, {
-      folder: 'animanga-wrapped', 
+    const result = await cloudinary.uploader.upload(path, {
+      folder: `animanga-wrapped/${username}`,
+      public_id: imageNameWithoutExtension, 
       use_filename: true,
       unique_filename: false,
     })
