@@ -1,6 +1,6 @@
 {
   "name": "animanga-wrapped-backend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Backend code for Animanga Wrapped, a web application for anime and manga enthusiasts. It handles user interactions, data management, and API integrations.",
   "main": "index.mjs",
   "scripts": {
