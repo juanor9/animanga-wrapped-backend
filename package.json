@@ -1,7 +1,7 @@
 {
   "name": "animanga-wrapped-backend",
-  "version": "0.1.5",
-  "description": "",
+  "version": "1.0.0",
+  "description": "Backend code for Animanga Wrapped, a web application for anime and manga enthusiasts. It handles user interactions, data management, and API integrations.",
   "main": "index.mjs",
   "scripts": {
     "start": "node src/index.mjs",
@@ -14,8 +14,8 @@
     "url": "git+https://github.com/juanor9/animanga-wrapped-backend.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Tanuki SAS",
+  "license": "All rights reserved",
   "bugs": {
     "url": "https://github.com/juanor9/animanga-wrapped-backend/issues"
   },
