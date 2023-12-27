@@ -6,7 +6,6 @@ async function handleLogin(
   res,
 ) {
   const { email, password } = req.body;
-  // console.log("🚀 ~ file: local.controller.mjs:9 ~ req.body:", req.body);
 
   try {
     const user = await getUserFilter({ email });

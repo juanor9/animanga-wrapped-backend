@@ -15,7 +15,6 @@ cloudinary.config({
 
 export async function uploadImage(data) {
   const {path, imageName, username} = data;
-  // console.log("🚀 ~ file: cloudinary.services.mjs:17 ~ uploadImage ~ image:", data);
   const imageNameWithoutExtension = imageName.split('.').slice(0, -1).join('.');
   try {
     const result = await cloudinary.uploader.upload(path, {
@@ -24,7 +23,6 @@ export async function uploadImage(data) {
       use_filename: true,
       unique_filename: false,
     })
-    // console.log("🚀 ~ file: cloudinary.services.mjs:24 ~ uploadImage ~ result:", result);
     return result;
   } catch (error) {
     throw new Error(error)

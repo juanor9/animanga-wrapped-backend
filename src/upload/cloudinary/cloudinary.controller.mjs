@@ -4,7 +4,6 @@ import { uploadImage } from './cloudinary.services.mjs';
 const handleUploadSingleImage = async(
   req, res
 ) => {
-  // console.log("🚀 ~ file: cloudinary.controller.mjs:7 ~ req:", req);
   const {path, size} = req.file;
   const {imageName, username} = req.body;
   const maxSize = 1080 *1080*10;
