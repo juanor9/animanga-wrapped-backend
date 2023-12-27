@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 // import crypto from 'crypto';
 // import bcrypt from 'bcryptjs';
 import { createUser, getUserById } from './user.services.mjs';

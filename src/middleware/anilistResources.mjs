@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
 const ALSourcesProxy = (req, res, next) => {
