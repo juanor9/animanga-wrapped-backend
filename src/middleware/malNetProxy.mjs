@@ -1,7 +1,6 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
 export default function (req, res, next) {
-  console.log("Received request at", req.url);
 
   const proxy = createProxyMiddleware({
     target: 'https://myanimelist.net',
@@ -14,11 +13,9 @@ export default function (req, res, next) {
       });
       proxyRes.on('end', () => {
         body = Buffer.concat(body).toString();
-        // console.log(`Response from MyAnimeList for ${req.url}:`, proxyRes.statusCode, body);
       });
     }
   });
 
-  // console.log("Proxying request to", 'https://myanimelist.net' + req.url.replace('/net', ''));
   proxy(req, res, next);
 };
