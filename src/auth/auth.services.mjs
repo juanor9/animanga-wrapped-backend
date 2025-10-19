@@ -7,7 +7,10 @@ export function signToken(payload) {
     throw new Error('JWT_SECRET is not defined');
   }
 
-  const token = jwt.sign(payload, secret);
+  const token = jwt.sign(payload, secret, {
+    expiresIn: '2h',
+    algorithm: 'HS256',
+  });
 
   return token;
 }
@@ -19,7 +22,9 @@ export function verifyToken(token) {
     throw new Error('JWT_SECRET is not defined');
   }
   try {
-    const decoded = jwt.verify(token, secret);
+    const decoded = jwt.verify(token, secret, {
+      algorithms: ['HS256'],
+    });
 
     return decoded;
   } catch (error) {

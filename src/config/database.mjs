@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import mongoose from 'mongoose';
 
-mongoose.set('strictQuery', false);
 async function connectDb() {
   const uri = process.env.MONGO_DB_URI;
 
@@ -10,7 +9,9 @@ async function connectDb() {
   }
 
   try {
-    await mongoose.connect(uri);
+    await mongoose.connect(uri, {
+      strictQuery: false,
+    });
 
     console.log('Connected to database');
   } catch (error) {
