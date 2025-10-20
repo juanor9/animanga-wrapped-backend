@@ -16,6 +16,9 @@ export async function handleCreateUser(req, res) {
     // Send verification email
     return res.status(200).json(user);
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(200).json({ message: 'El proceso de registro ha comenzado. Por favor, revisa tu correo electrónico para completar el proceso'});
+    }
     return res.status(500).json(error);
   }
 }

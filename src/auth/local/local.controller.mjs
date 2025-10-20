@@ -11,7 +11,7 @@ async function handleLogin(
     const user = await getUserFilter({ email });
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(401).json({ message: 'El correo electrónico o la contraseña son incorrectos' });
     }
 
     if (user.isActive !== true) {
@@ -22,7 +22,7 @@ async function handleLogin(
 
     if (!validPassword) {
       await handleFailedLogin(user);
-      return res.status(401).json({ message: 'Invalid password' });
+      return res.status(401).json({ message: 'El correo electrónico o la contraseña son incorrectos' });
     }
 
     await handleSuccessfulLogin(user);
