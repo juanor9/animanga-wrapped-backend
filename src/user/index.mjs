@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import { isAuthenticated } from '../auth/auth.services.mjs';
 import { handleCreateUser, handleGetUser, handleGetUserById } from './user.controller.mjs';
+import validateUserCreation from './user.validation.mjs';
 
 const router = Router();
 
 // POST api/user/   ---Create user ---
-router.post('/', handleCreateUser);
+router.post('/', validateUserCreation, handleCreateUser);
 
 // GET api/user/    ---Get user ---
 router.get('/', isAuthenticated, handleGetUser);
