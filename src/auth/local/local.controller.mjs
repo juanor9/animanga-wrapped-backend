@@ -1,5 +1,5 @@
 import { getUserFilter } from '../../user/user.services.mjs';
-import { signToken } from '../auth.services.mjs';
+import { signToken, handleFailedLogin, handleSuccessfulLogin } from '../auth.services.mjs';
 
 async function handleLogin(
   req,
@@ -13,19 +13,21 @@ async function handleLogin(
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    // verify if user is active
-    if (user.isActive !== true) { return res.status(401).json({ message: 'User is not active' }); }
 
-    // verify password
+    if (user.isActive !== true) {
+      return res.status(401).json({ message: 'User is not active' });
+    }
+
     const validPassword = await user.comparePassword(password);
 
     if (!validPassword) {
+      await handleFailedLogin(user);
       return res.status(401).json({ message: 'Invalid password' });
     }
 
-    // JWT
-    const jwtPayload = user.profile;
+    await handleSuccessfulLogin(user);
 
+    const jwtPayload = user.profile;
     const userToken = signToken(jwtPayload);
 
     return res.status(200).json({

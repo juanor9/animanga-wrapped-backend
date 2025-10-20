@@ -43,6 +43,18 @@ const UserSchema = new Schema(
       required: true,
     },
     lists: [ListSchema],
+    failedLoginAttempts: {
+      type: Number,
+      default: 0,
+    },
+    lastLoginAttempt: {
+      type: Date,
+      default: null,
+    },
+    isLocked: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
