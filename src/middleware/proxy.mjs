@@ -1,12 +1,11 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
-export default function (req, res, next) {
-
-  const proxy = createProxyMiddleware({
-    target: 'https://myanimelist.net',
+export default function proxy(req, res, next) {
+  const proxyMiddleware = createProxyMiddleware({
+    target: 'https://api.myanimelist.net',
     changeOrigin: true,
     pathRewrite: { '^/api': '' },
-    onProxyRes: function (proxyRes, req, res) {
+    onProxyRes(proxyRes) {
       let body = [];
       proxyRes.on('data', (chunk) => {
         body.push(chunk);
@@ -14,8 +13,8 @@ export default function (req, res, next) {
       proxyRes.on('end', () => {
         body = Buffer.concat(body).toString();
       });
-    }
+    },
   });
 
-  proxy(req, res, next);
-};
+  proxyMiddleware(req, res, next);
+}

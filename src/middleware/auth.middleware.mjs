@@ -2,7 +2,7 @@ import { getUserFilter } from '../user/user.services.mjs';
 
 const LOCK_TIME = 2 * 60 * 60 * 1000; // 2 hours
 
-export async function checkLockStatus(req, res, next) {
+async function checkLockStatus(req, res, next) {
   const { email } = req.body;
 
   if (!email) {
@@ -12,14 +12,19 @@ export async function checkLockStatus(req, res, next) {
   try {
     const user = await getUserFilter({ email });
 
-    if (user && user.isLocked && user.lastLoginAttempt && (new Date() - user.lastLoginAttempt < LOCK_TIME)) {
-      return res.status(401).json({ message: 'Account locked. Try again later.' });
-    }
-
-    if (user && user.isLocked && user.lastLoginAttempt && (new Date() - user.lastLoginAttempt > LOCK_TIME)) {
-      user.isLocked = false;
-      user.failedLoginAttempts = 0;
-      await user.save();
+    if (user && user.isLocked && user.lastLoginAttempt) {
+      const timeSinceLastLogin = new Date() - user.lastLoginAttempt;
+      if (timeSinceLastLogin < LOCK_TIME) {
+        return res.status(401).json({ message: 'Account locked. Try again later.' });
+      }
+      if (timeSinceLastLogin > LOCK_TIME) {
+        await user.constructor.findByIdAndUpdate(user.id, {
+          $set: {
+            isLocked: false,
+            failedLoginAttempts: 0,
+          },
+        });
+      }
     }
 
     next();
@@ -28,3 +33,5 @@ export async function checkLockStatus(req, res, next) {
   }
   return true;
 }
+
+export default checkLockStatus;

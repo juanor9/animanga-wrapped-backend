@@ -1,23 +1,31 @@
 // import crypto from 'crypto';
 // import bcrypt from 'bcryptjs';
 import { createUser, getUserById } from './user.services.mjs';
-import { verifyToken, signToken } from '../auth/auth.services.mjs';
+import { verifyToken } from '../auth/auth.services.mjs';
 
 export async function handleCreateUser(req, res) {
-  const data = req.body;
-  const newUser = data;
-  try {
-    newUser.isActive = true;
-    newUser.role = 'USER';
+  const {
+    email, password, country, listUsername,
+  } = req.body;
 
+  const userData = {
+    email,
+    password,
+    country,
+    listUsername,
+    isActive: true,
+    role: 'USER',
+  };
+
+  try {
     // Create user
-    const user = await createUser(data);
+    const user = await createUser(userData);
 
     // Send verification email
-    return res.status(200).json(user);
+    return res.status(201).json(user);
   } catch (error) {
     if (error.code === 11000) {
-      return res.status(200).json({ message: 'El proceso de registro ha comenzado. Por favor, revisa tu correo electrónico para completar el proceso'});
+      return res.status(409).json({ message: 'A user with that email already exists.' });
     }
     return res.status(500).json(error);
   }

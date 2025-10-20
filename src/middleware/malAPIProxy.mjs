@@ -1,7 +1,6 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
 const MALProxy = (req, res, next) => {
-
   const proxy = createProxyMiddleware({
     target: 'https://api.myanimelist.net',
     changeOrigin: true,

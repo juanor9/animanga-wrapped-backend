@@ -1,0 +1,12 @@
+{
+  "extends": "airbnb-base",
+  "rules": {
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "mjs": "always"
+      }
+    ]
+  }
+}

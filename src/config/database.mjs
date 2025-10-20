@@ -9,9 +9,7 @@ async function connectDb() {
   }
 
   try {
-    await mongoose.connect(uri, {
-      strictQuery: false,
-    });
+    await mongoose.connect(uri);
 
     console.log('Connected to database');
   } catch (error) {

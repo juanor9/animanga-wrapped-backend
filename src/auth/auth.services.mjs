@@ -50,23 +50,30 @@ export function isAuthenticated(
   if (!decoded) {
     return res.status(401).json({ message: 'token undecoded' });
   }
-  console.log('request authorized');
   next();
   return true;
 }
 
 export async function handleFailedLogin(user) {
-  user.failedLoginAttempts += 1;
-  user.lastLoginAttempt = new Date();
-  if (user.failedLoginAttempts >= MAX_LOGIN_ATTEMPTS) {
-    user.isLocked = true;
+  const updates = {
+    $inc: { failedLoginAttempts: 1 },
+    $set: { lastLoginAttempt: new Date() },
+  };
+
+  if (user.failedLoginAttempts + 1 >= MAX_LOGIN_ATTEMPTS) {
+    updates.$set.isLocked = true;
   }
-  await user.save();
+
+  await user.constructor.findByIdAndUpdate(user.id, updates);
 }
 
 export async function handleSuccessfulLogin(user) {
-  user.failedLoginAttempts = 0;
-  user.lastLoginAttempt = null;
-  user.isLocked = false;
-  await user.save();
+  const updates = {
+    $set: {
+      failedLoginAttempts: 0,
+      lastLoginAttempt: null,
+      isLocked: false,
+    },
+  };
+  await user.constructor.findByIdAndUpdate(user.id, updates);
 }
