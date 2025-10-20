@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
 
+const MAX_LOGIN_ATTEMPTS = 5;
+
 // Sign Token
 export function signToken(payload) {
   const secret = process.env.JWT_SECRET;
@@ -51,4 +53,20 @@ export function isAuthenticated(
   console.log('request authorized');
   next();
   return true;
+}
+
+export async function handleFailedLogin(user) {
+  user.failedLoginAttempts += 1;
+  user.lastLoginAttempt = new Date();
+  if (user.failedLoginAttempts >= MAX_LOGIN_ATTEMPTS) {
+    user.isLocked = true;
+  }
+  await user.save();
+}
+
+export async function handleSuccessfulLogin(user) {
+  user.failedLoginAttempts = 0;
+  user.lastLoginAttempt = null;
+  user.isLocked = false;
+  await user.save();
 }
