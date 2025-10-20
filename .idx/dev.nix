@@ -11,6 +11,7 @@
     # pkgs.python311Packages.pip
     # pkgs.nodejs_20
     # pkgs.nodePackages.nodemon
+    pkgs.libressl_3_6.bin
   ];
 
   # Sets environment variables in the workspace
