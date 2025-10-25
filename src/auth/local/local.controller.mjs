@@ -32,11 +32,16 @@ async function handleLogin(
     await handleSuccessfulLogin(user);
 
     const jwtPayload = user.profile;
-    const userToken = signToken(jwtPayload);
+    const accessToken = signToken(jwtPayload);
+    const refreshToken = signRefreshToken(jwtPayload);
+
+    user.refreshToken = refreshToken;
+    await user.save();
 
     return res.status(200).json({
       profile: user.profile,
-      userToken,
+      accessToken,
+      refreshToken,
     });
   } catch (error) {
     return res.status(500).json(error);

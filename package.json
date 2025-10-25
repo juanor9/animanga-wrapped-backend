@@ -4,8 +4,8 @@
   "description": "Backend code for Animanga Wrapped, a web application for anime and manga enthusiasts. It handles user interactions, data management, and API integrations.",
   "main": "index.mjs",
   "scripts": {
-    "start": "node src/index.mjs",
-    "dev": "nodemon src/index.mjs",
+    "start": "node --import=dotenv/config src/index.mjs",
+    "dev": "nodemon --exec 'node --import=dotenv/config src/index.mjs'",
     "prepare-db": "node src/config/database.mjs --prepare",
     "migrate-db": "node src/config/database.mjs --migrate",
     "lint": "eslint src/**/*.mjs"

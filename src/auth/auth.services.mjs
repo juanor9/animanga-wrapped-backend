@@ -1,17 +1,28 @@
 import jwt from 'jsonwebtoken';
 
+// The private and public keys are stored in environment variables.
+// The '\n' is replaced with actual newline characters.
+const privateKey = process.env.PRIVATE_KEY.replace(/\n/g, '\n');
+const publicKey = process.env.PUBLIC_KEY.replace(/\n/g, '\n');
+
+
 const MAX_LOGIN_ATTEMPTS = 5;
 
 // Sign Token
 export function signToken(payload) {
-  const secret = process.env.JWT_SECRET;
-  if (!secret) {
-    throw new Error('JWT_SECRET is not defined');
-  }
+  const token = jwt.sign(payload, privateKey, {
+    expiresIn: '15m',
+    algorithm: 'RS256',
+  });
 
-  const token = jwt.sign(payload, secret, {
-    expiresIn: '2h',
-    algorithm: 'HS256',
+  return token;
+}
+
+// Sign Refresh Token
+export function signRefreshToken(payload) {
+  const token = jwt.sign(payload, privateKey, {
+    expiresIn: '7d',
+    algorithm: 'RS256',
   });
 
   return token;
@@ -19,13 +30,22 @@ export function signToken(payload) {
 
 // Verify Token
 export function verifyToken(token) {
-  const secret = process.env.JWT_SECRET;
-  if (!secret) {
-    throw new Error('JWT_SECRET is not defined');
-  }
   try {
-    const decoded = jwt.verify(token, secret, {
-      algorithms: ['HS256'],
+    const decoded = jwt.verify(token, publicKey, {
+      algorithms: ['RS256'],
+    });
+
+    return decoded;
+  } catch (error) {
+    return false;
+  }
+}
+
+// Verify Refresh Token
+export function verifyRefreshToken(token) {
+  try {
+    const decoded = jwt.verify(token, publicKey, {
+      algorithms: ['RS256'],
     });
 
     return decoded;
